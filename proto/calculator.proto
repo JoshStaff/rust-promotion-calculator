@@ -1,0 +1,44 @@
+syntax = "proto3";
+package calculator;
+
+service Calculator {
+    rpc run (CalculationData) returns (CalculationResponse);
+}
+
+message Product {
+    int32 id = 1;
+    int32 price = 2;
+    map<int32, Tag> tags = 3;
+}
+
+message Tag {
+    int32 id = 1;
+}
+
+message Promotion {
+    int32 id = 1;
+    map<int32, Qualification> qualifications = 2;
+    string rule = 3;
+    int32 price = 4;
+    map<int32, Exclusions> exclusions = 5;
+}
+
+message Qualification {
+    map<int32, Tag> tags = 1;
+    int32 min = 2;
+    int32 max = 3;
+}
+
+message Exclusions {
+    map<int32, Product> products = 1;
+    map<int32, Promotion> promotions = 2;
+}
+
+message CalculationData {
+    map<int32, Product> products = 1;
+    map<int32, Promotion> promotions = 2;
+}
+
+message CalculationResponse {
+    int32 price = 1;
+}
